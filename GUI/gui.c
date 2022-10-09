@@ -1044,6 +1044,9 @@ u32 gui_get_stringline(u8*str,u16 linelenth,u8 font)
 //fcolor:字体颜色,以叠加方式写字.
 void gui_show_string(u8*str,u16 x,u16 y,u16 width,u16 height,u8 font,u16 fcolor)
 {
+//由此处开始向前寻找gbk码
+	
+
 	u16 xpos=x;
 	u16 ypos=y;
 	u16 endx=x+width-1;
@@ -1082,6 +1085,18 @@ void gui_show_string(u8*str,u16 x,u16 y,u16 width,u16 height,u8 font,u16 fcolor)
 		if(ypos>endy)break;//超过了显示区域了.	
 	}	  
 }	
+//更安全的形式显示字符
+//str:字符串指针;
+//x,y,width,height:显示区域
+//font:字体大小
+//fcolor:字体颜色,以叠加方式写字.
+void gui_show_string_s(u8* str,u8 size,u16 x,u16 y,u16 width,u16 height,u8 font,u16 fcolor){
+	if(*(str+size)!= '\0'){
+		*(str+size) = '\0';
+	}
+	gui_show_string(str,x,y,width,height,font,fcolor);
+}
+
 //由此处开始向前寻找gbk码(即大于0x80的字节)的个数
 //str:字符串
 //pos:开始查找的地址
